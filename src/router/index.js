@@ -1,35 +1,46 @@
+
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
-import ServiceView from '@/views/ServiceView.vue'
-import ContactView from '@/views/ContactView.vue'
+import DashboardView from '../views/DashboardView.vue'
+import BookView from '../views/BookView.vue'
+import CategoryView from '../views/CategoryView.vue'
+import MemberView from '../views/MemberView.vue'
+import BorrowView from '../views/BorrowView.vue'
+
+const routes = [
+  {
+    path: '/',
+    redirect: '/dashboard'
+  },
+  {
+    path: '/dashboard',
+    name: 'Dashboard',
+    component: DashboardView
+  },
+  {
+    path: '/books',
+    name: 'Books',
+    component: BookView
+  },
+  {
+    path: '/categories',
+    name: 'Categories',
+    component: CategoryView
+  },
+  {
+    path: '/members',
+    name: 'Members',
+    component: MemberView
+  },
+  {
+    path: '/borrowing',
+    name: 'Borrowing',
+    component: BorrowView
+  }
+]
 
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
-  routes: [
-    {
-      path: '/',
-      name: 'home',
-      component: HomeView,
-    },
-    {
-      path: '/about',
-      name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import('../views/AboutView.vue'),
-    },
-    {
-      path: '/service',
-      name: 'service',
-      component: ServiceView,
-    },
-    {
-      path: '/contact',
-      name: 'contact',
-      component: ContactView,
-    },
-  ],
+  history: createWebHistory(),
+  routes
 })
 
 export default router

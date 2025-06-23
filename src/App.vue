@@ -1,22 +1,22 @@
-<script setup>
-import { RouterLink, RouterView } from 'vue-router'
-</script>
-
 <template>
-  <header>
+  <div class="flex h-screen bg-gray-100">
+    <!-- Sidebar Component -->
+    <Aside />
 
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-        <RouterLink to="/service">About</RouterLink>
-        <RouterLink to="/contact">About</RouterLink>
-      </nav>
-    </div>
-  </header>
-
-  <RouterView />
+    <!-- Main Content -->
+    <main class="flex-1 overflow-auto">
+      <router-view />
+    </main>
+  </div>
 </template>
+
+<script>
+import Aside from './components/Aside.vue'
+
+export default {
+  name: 'App',
+  components: {
+    Aside
+  }
+}
+</script>
