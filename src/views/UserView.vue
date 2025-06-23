@@ -1,10 +1,10 @@
 <template>
   <div class="p-6 bg-gray-100 min-h-screen">
     <div class="flex justify-between items-center mb-6">
-      <h2 class="text-4xl font-extrabold text-fuchsia-600 tracking-tight">Users Management</h2>
+      <h2 class="text-4xl font-extrabold text-black tracking-tight">Users Management</h2>
       <button
         @click="showUserForm = true; editingUser = null; resetUserForm()"
-        class="bg-gradient-to-r from-fuchsia-500 to-fuchsia-700 text-white px-6 py-3 rounded-full hover:from-fuchsia-600 hover:to-fuchsia-800 transition-all duration-300 shadow-md flex items-center"
+        class="bg-gradient-to-r from-green-500 to-green-700 text-white px-6 py-3  hover:from-green-600 hover:to-green-800 transition-all duration-300 shadow-md flex items-center"
       >
         <i class="bx bx-plus mr-2"></i> Add New User
       </button>
@@ -15,7 +15,7 @@
     </div>
     <div v-else class="bg-white rounded-xl shadow-lg overflow-hidden">
       <table class="w-full">
-        <thead class="bg-gradient-to-r from-fuchsia-600 to-fuchsia-800 text-white">
+        <thead class="bg-gradient-to-r from-green-600 to-green-800 text-white">
           <tr>
             <th class="px-6 py-4 text-left text-sm font-semibold uppercase tracking-wider">First Name</th>
             <th class="px-6 py-4 text-left text-sm font-semibold uppercase tracking-wider">Last Name</th>
@@ -24,7 +24,7 @@
           </tr>
         </thead>
         <tbody class="divide-y divide-gray-200">
-          <tr v-for="user in libraryStore.users" :key="user.id" class="hover:bg-fuchsia-50 transition-colors duration-200">
+          <tr v-for="user in libraryStore.users" :key="user.id" class="hover:bg-green-50 transition-colors duration-200">
             <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ user.first_name }}</td>
             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">{{ user.last_name }}</td>
             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">{{ user.email }}</td>
@@ -42,13 +42,13 @@
               >
                 <button
                   @click.stop="viewUser(user)"
-                  class="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-fuchsia-100"
+                  class="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-green-100"
                 >
                   <i class="bx bx-show mr-2"></i> View
                 </button>
                 <button
                   @click.stop="editUser(user)"
-                  class="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-fuchsia-100"
+                  class="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-green-100"
                 >
                   <i class="bx bx-edit mr-2"></i> Edit
                 </button>
@@ -76,7 +76,7 @@
                 v-model="userForm.first_name"
                 type="text"
                 required
-                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-fuchsia-500 transition-colors"
+                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 transition-colors"
                 placeholder="Enter first name"
               >
             </div>
@@ -86,7 +86,7 @@
                 v-model="userForm.last_name"
                 type="text"
                 required
-                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-fuchsia-500 transition-colors"
+                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 transition-colors"
                 placeholder="Enter last name"
               >
             </div>
@@ -96,7 +96,7 @@
                 v-model="userForm.email"
                 type="email"
                 required
-                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-fuchsia-500 transition-colors"
+                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 transition-colors"
                 placeholder="Enter email"
               >
             </div>
@@ -106,7 +106,7 @@
                 v-model="userForm.password"
                 type="password"
                 required
-                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-fuchsia-500 transition-colors"
+                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 transition-colors"
                 placeholder="Enter password"
               >
             </div>
@@ -121,7 +121,7 @@
             </button>
             <button
               type="submit"
-              class="px-4 py-2 bg-gradient-to-r from-fuchsia-500 to-fuchsia-700 text-white rounded-lg hover:from-fuchsia-600 hover:to-fuchsia-800 transition-all duration-300 flex items-center"
+              class="px-4 py-2 bg-gradient-to-r from-green-500 to-green-700 text-white rounded-lg hover:from-green-600 hover:to-green-800 transition-all duration-300 flex items-center"
             >
               <i class="bx bx-save mr-2"></i> {{ editingUser ? 'Update' : 'Add' }} User
             </button>
@@ -131,36 +131,36 @@
     </div>
 
     <div v-if="showViewModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 transition-opacity duration-300">
-      <div class="bg-gradient-to-br from-white to-fuchsia-50 p-8 rounded-2xl w-full max-w-lg shadow-2xl transform scale-95 animate-fade-in">
-        <h3 class="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-fuchsia-600 to-fuchsia-800 mb-6 border-b-2 border-fuchsia-600 pb-2">User Details</h3>
+      <div class="bg-gradient-to-br from-white to-green-50 p-8 rounded-2xl w-full max-w-lg shadow-2xl transform scale-95 animate-fade-in">
+        <h3 class="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-green-600 to-green-800 mb-6 border-b-2 border-green-600 pb-2">User Details</h3>
         <div class="space-y-4">
-          <div class="bg-white shadow-sm rounded-lg p-4 hover:shadow-md hover:bg-fuchsia-50 transition-all duration-200 animate-slide-in" style="--delay: 0.1s">
+          <div class="bg-white shadow-sm rounded-lg p-4 hover:shadow-md hover:bg-green-50 transition-all duration-200 animate-slide-in" style="--delay: 0.1s">
             <label class="flex items-center text-sm font-medium text-gray-700">
-              <i class="bx bx-user mr-2 text-fuchsia-600"></i> First Name
+              <i class="bx bx-user mr-2 text-green-600"></i> First Name
             </label>
             <p class="text-lg font-semibold text-gray-900 mt-1">{{ selectedUser.first_name }}</p>
           </div>
-          <div class="bg-white shadow-sm rounded-lg p-4 hover:shadow-md hover:bg-fuchsia-50 transition-all duration-200 animate-slide-in" style="--delay: 0.2s">
+          <div class="bg-white shadow-sm rounded-lg p-4 hover:shadow-md hover:bg-green-50 transition-all duration-200 animate-slide-in" style="--delay: 0.2s">
             <label class="flex items-center text-sm font-medium text-gray-700">
-              <i class="bx bx-user mr-2 text-fuchsia-600"></i> Last Name
+              <i class="bx bx-user mr-2 text-green-600"></i> Last Name
             </label>
             <p class="text-lg font-semibold text-gray-900 mt-1">{{ selectedUser.last_name }}</p>
           </div>
-          <div class="bg-white shadow-sm rounded-lg p-4 hover:shadow-md hover:bg-fuchsia-50 transition-all duration-200 animate-slide-in" style="--delay: 0.3s">
+          <div class="bg-white shadow-sm rounded-lg p-4 hover:shadow-md hover:bg-green-50 transition-all duration-200 animate-slide-in" style="--delay: 0.3s">
             <label class="flex items-center text-sm font-medium text-gray-700">
-              <i class="bx bx-envelope mr-2 text-fuchsia-600"></i> Email
+              <i class="bx bx-envelope mr-2 text-green-600"></i> Email
             </label>
             <p class="text-lg font-semibold text-gray-900 mt-1">{{ selectedUser.email }}</p>
           </div>
-          <div class="bg-white shadow-sm rounded-lg p-4 hover:shadow-md hover:bg-fuchsia-50 transition-all duration-200 animate-slide-in" style="--delay: 0.4s">
+          <div class="bg-white shadow-sm rounded-lg p-4 hover:shadow-md hover:bg-green-50 transition-all duration-200 animate-slide-in" style="--delay: 0.4s">
             <label class="flex items-center text-sm font-medium text-gray-700">
-              <i class="bx bx-calendar mr-2 text-fuchsia-600"></i> Created At
+              <i class="bx bx-calendar mr-2 text-green-600"></i> Created At
             </label>
             <p class="text-lg font-semibold text-gray-900 mt-1">{{ libraryStore.formatDate(selectedUser.created_at) }}</p>
           </div>
-          <div class="bg-white shadow-sm rounded-lg p-4 hover:shadow-md hover:bg-fuchsia-50 transition-all duration-200 animate-slide-in" style="--delay: 0.5s">
+          <div class="bg-white shadow-sm rounded-lg p-4 hover:shadow-md hover:bg-green-50 transition-all duration-200 animate-slide-in" style="--delay: 0.5s">
             <label class="flex items-center text-sm font-medium text-gray-700">
-              <i class="bx bx-calendar-edit mr-2 text-fuchsia-600"></i> Updated At
+              <i class="bx bx-calendar-edit mr-2 text-green-600"></i> Updated At
             </label>
             <p class="text-lg font-semibold text-gray-900 mt-1">{{ libraryStore.formatDate(selectedUser.updated_at) }}</p>
           </div>
@@ -168,7 +168,7 @@
         <div class="flex justify-end mt-8">
           <button
             @click="showViewModal = false"
-            class="px-6 py-3 bg-gradient-to-r from-fuchsia-500 to-fuchsia-700 text-white rounded-lg hover:from-fuchsia-600 hover:to-fuchsia-800 transition-all duration-300 flex items-center shadow-md hover:scale-105"
+            class="px-6 py-3 bg-gradient-to-r from-green-500 to-green-700 text-white rounded-lg hover:from-green-600 hover:to-green-800 transition-all duration-300 flex items-center shadow-md hover:scale-105"
           >
             <i class="bx bx-x mr-2 text-xl"></i> Close
           </button>

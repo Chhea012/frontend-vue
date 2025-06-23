@@ -4,7 +4,7 @@
       <h2 class="text-4xl font-extrabold text-gray-900 tracking-tight">Books Management</h2>
       <button
         @click="showBookForm = true; editingBook = null; resetBookForm()"
-        class="bg-gradient-to-r from-blue-500 to-blue-700 text-white px-6 py-3 rounded-full hover:from-blue-600 hover:to-blue-800 transition-all duration-300 shadow-md flex items-center"
+        class="bg-gradient-to-r from-blue-500 to-blue-700 text-white px-6 py-3  hover:from-blue-600 hover:to-blue-800 transition-all duration-300 shadow-md flex items-center"
       >
         <i class="bx bx-plus mr-2"></i> Add New Book
       </button>
