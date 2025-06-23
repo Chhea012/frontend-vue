@@ -1,24 +1,26 @@
 <template>
-  <div>
-    <h2 class=" text-fuchsia-600">Members</h2>
-    <ul>
-      <li v-for="member in members" :key="member.id">{{ member.name }}</li>
+  <div class="p-6">
+    <h2 class="text-2xl font-bold text-fuchsia-500 mb-4">Members</h2>
+    <div v-if="libraryStore.error" class="text-red-500 text-center py-4">
+      Error: {{ libraryStore.error }}
+    </div>
+    <ul v-else class="space-y-2">
+      <li v-for="member in libraryStore.members" :key="member.id" class="p-2 bg-gray-50 rounded">
+        {{ member.name }}
+      </li>
     </ul>
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
-import api from "./axios";
+import { useLibraryStore } from '@/stores/libraryStore'
+import { onMounted } from 'vue'
 
-const members = ref([]);
+const libraryStore = useLibraryStore()
 
-onMounted(async () => {
-  try {
-    const res = await api.get("/members");
-    members.value = res.data;
-  } catch (error) {
-    console.error("Failed to fetch members:", error);
+onMounted(() => {
+  if (!libraryStore.members.length) {
+    libraryStore.fetchAllData()
   }
-});
+})
 </script>
