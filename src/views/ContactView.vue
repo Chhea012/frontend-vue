@@ -1,3 +1,8 @@
 <template>
-    <h1>Welcome to contact page</h1>
+<Member />
+
 </template>
+
+<script setup>
+import Member from '@/components/Member.vue';
+</script>

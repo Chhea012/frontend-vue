@@ -1,7 +1,9 @@
 <script setup>
-
+import User from '@/components/User.vue';
+import Borrow from '@/components/Borrow.vue';
 </script>
 
 <template>
-  <h1>Welcome to home page</h1>
+<User/>
+<Borrow />
 </template>

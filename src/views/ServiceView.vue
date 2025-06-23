@@ -1,4 +1,8 @@
 <template>
-    <h1>Welcome to service</h1>
+   <Category />
 
 </template>
+
+<script setup>
+import Category from '@/components/Category.vue';
+</script>

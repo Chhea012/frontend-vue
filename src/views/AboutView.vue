@@ -1,7 +1,10 @@
 <template>
-  <div class="about">
-    <h1>This is an about page</h1>
-  </div>
+  <Book />
+
 </template>
+
+<script setup>
+import Book from '@/components/Book.vue';
+</script>
 
 
