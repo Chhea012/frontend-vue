@@ -50,11 +50,19 @@
             <span class="mr-2">🔄</span> Borrowing
           </router-link>
         </li>
+        <li>
+          <router-link
+            to="/users"
+            class="flex items-center px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"
+            :class="{ 'bg-blue-100 text-blue-600': $route.name === 'Users' }"
+          >
+            <span class="mr-2">👤</span> Users
+          </router-link>
+        </li>
       </ul>
     </nav>
   </aside>
 </template>
 
 <script setup>
-
 </script>

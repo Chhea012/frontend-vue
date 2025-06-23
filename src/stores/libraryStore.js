@@ -64,6 +64,36 @@ export const useLibraryStore = defineStore('library', {
       }
     },
 
+    async addUser(user) {
+      try {
+        const response = await api.post('/users', user)
+        this.users.push(response.data)
+      } catch (error) {
+        throw new Error('Failed to add user: ' + error.message)
+      }
+    },
+
+    async updateUser(userId, user) {
+      try {
+        const response = await api.put(`/users/${userId}`, user)
+        const index = this.users.findIndex(u => u.id === userId)
+        if (index !== -1) {
+          this.users[index] = response.data
+        }
+      } catch (error) {
+        throw new Error('Failed to update user: ' + error.message)
+      }
+    },
+
+    async deleteUser(userId) {
+      try {
+        await api.delete(`/users/${userId}`)
+        this.users = this.users.filter(u => u.id !== userId)
+      } catch (error) {
+        throw new Error('Failed to delete user: ' + error.message)
+      }
+    },
+
     getBookTitle(bookId) {
       const book = this.books.find(b => b.id === bookId)
       return book ? book.name : 'Unknown'
@@ -72,6 +102,11 @@ export const useLibraryStore = defineStore('library', {
     getMemberName(memberId) {
       const member = this.members.find(m => m.id === memberId)
       return member ? member.name : 'Unknown'
+    },
+
+    getUserName(userId) {
+      const user = this.users.find(u => u.id === userId)
+      return user ? user.first_name : 'Unknown'
     },
 
     getCategoryName(categoryId) {
@@ -86,8 +121,9 @@ export const useLibraryStore = defineStore('library', {
 
   getters: {
     borrowedBooks: state => state.borrows.filter(b => b.status === 'approved'),
-    totalBorrowedQuantity: state => state.borrows
-      .filter(b => b.status === 'approved')
-      .reduce((sum, borrow) => sum + (Number(borrow.quantity) || 0), 0)
+    totalBorrowedQuantity: state =>
+      state.borrows
+        .filter(b => b.status === 'approved')
+        .reduce((sum, borrow) => sum + (Number(borrow.quantity) || 0), 0)
   }
 })

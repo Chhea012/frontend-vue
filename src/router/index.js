@@ -5,6 +5,8 @@ import BookView from '../views/BookView.vue'
 import CategoryView from '../views/CategoryView.vue'
 import MemberView from '../views/MemberView.vue'
 import BorrowView from '../views/BorrowView.vue'
+import User from '@/components/User.vue'
+import UserView from '@/views/UserView.vue'
 
 const routes = [
   {
@@ -25,6 +27,11 @@ const routes = [
     path: '/categories',
     name: 'Categories',
     component: CategoryView
+  },
+  {
+    path: '/users',
+    name: 'user',
+    component: UserView
   },
   {
     path: '/members',

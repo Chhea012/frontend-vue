@@ -5,10 +5,21 @@
       Error: {{ libraryStore.error }}
     </div>
     <ul v-else class="space-y-2">
-      <li v-for="borrow in libraryStore.borrows" :key="borrow.id" class="p-2 bg-gray-50 rounded">
-        Quantity: {{ borrow.quantity }} | Status: {{ borrow.status }} | 
-        Start: {{ libraryStore.formatDate(borrow.start_at) }} | 
-        End: {{ libraryStore.formatDate(borrow.end_date) }}
+      <li
+        v-for="borrow in libraryStore.borrows"
+        :key="borrow.id"
+        class="p-2 bg-gray-50 rounded"
+      >
+        <div class="font-semibold text-gray-800">
+          {{ libraryStore.getBookTitle(borrow.book_id) }} borrowed by
+          {{ libraryStore.getUserName(borrow.user_id) }}
+        </div>
+        <div class="text-sm text-gray-600">
+          Quantity: {{ borrow.quantity }} |
+          Status: {{ borrow.status }} |
+          Start: {{ libraryStore.formatDate(borrow.start_at) }} |
+          End: {{ libraryStore.formatDate(borrow.end_date) }}
+        </div>
       </li>
     </ul>
   </div>

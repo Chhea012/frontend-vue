@@ -77,7 +77,7 @@
                  class="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
               <div>
                 <p class="font-medium text-gray-800">{{ libraryStore.getBookTitle(borrow.book_id) }}</p>
-                <p class="text-sm text-gray-600">Borrowed by {{ libraryStore.getMemberName(borrow.user_id) }}</p>
+                <p class="text-sm text-gray-600">Borrowed by {{ libraryStore.getUserName(borrow.user_id) }}</p>
               </div>
               <div class="text-sm text-gray-500">
                 {{ libraryStore.formatDate(borrow.start_at) }}
