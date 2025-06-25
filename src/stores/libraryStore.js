@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import api from '@/components/axios'
+import api from '@/plugins/axios'
 
 export const useLibraryStore = defineStore('library', {
   state: () => ({

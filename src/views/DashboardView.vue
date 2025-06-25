@@ -35,7 +35,7 @@
               <span class="text-2xl">📖</span>
             </div>
             <div class="ml-4">
-              <p class="text-sm text-gray-600">Total Borrowed Quantity</p>
+              <p class="text-sm text-gray-600">Total Borrowed </p>
               <p class="text-2xl font-bold text-gray-800">{{ libraryStore.totalBorrowedQuantity }}</p>
             </div>
           </div>
