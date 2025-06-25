@@ -10,6 +10,11 @@
       </button>
     </div>
 
+    <!-- Error Message -->
+    <div v-if="libraryStore.error" class="text-red-500 text-center py-4 mb-4 bg-red-50 rounded-lg">
+      Error: {{ libraryStore.error }}
+    </div>
+
     <!-- Members Table -->
     <div class="bg-white rounded-lg shadow overflow-hidden">
       <table class="w-full">
@@ -18,8 +23,9 @@
             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Phone</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Gender</th>
             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Join Date</th>
-            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Books Borrowed</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Book</th>
             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
           </tr>
         </thead>
@@ -28,8 +34,9 @@
             <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ member.name }}</td>
             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ member.email }}</td>
             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ member.phone }}</td>
-            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ libraryStore.formatDate(member.joinDate) }}</td>
-            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ libraryStore.getMemberBorrowedCount(member.id) }}</td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ member.gender }}</td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ libraryStore.formatDate(member.created_at) }}</td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ libraryStore.getBookTitle(member.book_id) }}</td>
             <td class="px-6 py-4 whitespace-nowrap text-sm font-medium space-x-2">
               <button
                 @click="editMember(member)"
@@ -82,6 +89,28 @@
                 class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               >
             </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Gender</label>
+              <select
+                v-model="memberForm.gender"
+                required
+                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              >
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Book</label>
+              <select
+                v-model="memberForm.book_id"
+                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              >
+                <option value="">Select a book</option>
+                <option v-for="book in libraryStore.books" :key="book.id" :value="book.id">{{ book.name }}</option>
+              </select>
+            </div>
           </div>
           <div class="flex justify-end space-x-3 mt-6">
             <button
@@ -117,28 +146,44 @@ export default {
     const memberForm = ref({
       name: '',
       email: '',
-      phone: ''
+      phone: '',
+      gender: '',
+      book_id: ''
     })
 
-    const saveMember = () => {
-      if (editingMember.value) {
-        libraryStore.updateMember(editingMember.value.id, memberForm.value)
-      } else {
-        libraryStore.addMember(memberForm.value)
+    const saveMember = async () => {
+      try {
+        if (editingMember.value) {
+          await libraryStore.updateMember(editingMember.value.id, memberForm.value)
+        } else {
+          await libraryStore.addMember(memberForm.value)
+        }
+        showMemberForm.value = false
+        resetMemberForm()
+      } catch (error) {
+        console.error('Failed to save member:', error)
       }
-      showMemberForm.value = false
-      resetMemberForm()
     }
 
     const editMember = (member) => {
       editingMember.value = member
-      memberForm.value = { ...member }
+      memberForm.value = { 
+        name: member.name,
+        email: member.email,
+        phone: member.phone,
+        gender: member.gender,
+        book_id: member.book_id
+      }
       showMemberForm.value = true
     }
 
-    const deleteMember = (memberId) => {
+    const deleteMember = async (memberId) => {
       if (confirm('Are you sure you want to delete this member?')) {
-        libraryStore.deleteMember(memberId)
+        try {
+          await libraryStore.deleteMember(memberId)
+        } catch (error) {
+          console.error('Failed to delete member:', error)
+        }
       }
     }
 
@@ -146,8 +191,16 @@ export default {
       memberForm.value = {
         name: '',
         email: '',
-        phone: ''
+        phone: '',
+        gender: '',
+        book_id: ''
       }
+      editingMember.value = null
+    }
+
+    // Fetch data on mount if not already loaded
+    if (!libraryStore.members.length) {
+      libraryStore.fetchAllData()
     }
 
     return {

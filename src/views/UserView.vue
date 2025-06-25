@@ -15,7 +15,7 @@
     </div>
     <div v-else class="bg-white rounded-xl shadow-lg overflow-hidden">
       <table class="w-full">
-        <thead class="bg-gradient-to-r from-green-600 to-green-800 text-white">
+        <thead class="bg-gradient-to-r bg-gray-50 text-gray-500">
           <tr>
             <th class="px-6 py-4 text-left text-sm font-semibold uppercase tracking-wider">First Name</th>
             <th class="px-6 py-4 text-left text-sm font-semibold uppercase tracking-wider">Last Name</th>
