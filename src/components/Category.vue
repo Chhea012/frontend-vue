@@ -30,6 +30,8 @@ onMounted(async () => {
     isLoading.value = true
     try {
       await libraryStore.fetchAllData()
+    } catch (error) {
+      // Error is handled by the store
     } finally {
       isLoading.value = false
     }

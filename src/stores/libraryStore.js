@@ -30,7 +30,7 @@ export const useLibraryStore = defineStore('library', {
         this.users = usersRes.data
       } catch (error) {
         this.error = error.message || 'Failed to fetch data'
-        console.error('Failed to fetch data:', error)
+        throw error
       }
     },
 

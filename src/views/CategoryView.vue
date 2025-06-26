@@ -10,6 +10,11 @@
       </button>
     </div>
 
+    <!-- Error Message -->
+    <div v-if="errorMessage" class="text-red-500 text-center py-4 bg-red-100 p-3 rounded-lg mb-4">
+      Error: {{ errorMessage }}
+    </div>
+
     <!-- Categories Table -->
     <div class="bg-white rounded-lg shadow overflow-hidden">
       <table class="w-full">
@@ -76,6 +81,14 @@
                 class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               ></textarea>
             </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Duration (optional)</label>
+              <input
+                v-model="categoryForm.duration"
+                type="text"
+                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              >
+            </div>
           </div>
           <div class="flex justify-end space-x-3 mt-6">
             <button
@@ -108,37 +121,60 @@ export default {
     const libraryStore = useLibraryStore()
     const showCategoryForm = ref(false)
     const editingCategory = ref(null)
+    const errorMessage = ref(null)
     const categoryForm = ref({
-      name: '',
-      description: ''
+      type: '',
+      description: '',
+      duration: null
     })
 
-    const saveCategory = () => {
-      if (editingCategory.value) {
-        libraryStore.updateCategory(editingCategory.value.id, categoryForm.value)
-      } else {
-        libraryStore.addCategory(categoryForm.value)
+    const saveCategory = async () => {
+      try {
+        const payload = {
+          type: categoryForm.value.type,
+          description: categoryForm.value.description,
+          duration: categoryForm.value.duration || null
+        }
+        console.log('Saving category with payload:', payload)
+        if (editingCategory.value) {
+          await libraryStore.updateCategory(editingCategory.value.id, payload)
+        } else {
+          await libraryStore.addCategory(payload)
+        }
+        showCategoryForm.value = false
+        resetCategoryForm()
+        errorMessage.value = null
+      } catch (error) {
+        console.error('Update error:', error.response?.data || error.message)
+        errorMessage.value = error.response?.data?.message || error.message || 'Failed to save category'
       }
-      showCategoryForm.value = false
-      resetCategoryForm()
     }
 
     const editCategory = (category) => {
       editingCategory.value = category
-      categoryForm.value = { ...category }
+      categoryForm.value = {
+        type: category.type,
+        description: category.description,
+        duration: category.duration || null
+      }
       showCategoryForm.value = true
+      errorMessage.value = null
     }
 
-    const deleteCategory = (categoryId) => {
-      if (confirm('Are you sure you want to delete this category?')) {
-        libraryStore.deleteCategory(categoryId)
+    const deleteCategory = async (categoryId) => {
+      try {
+        await libraryStore.deleteCategory(categoryId)
+        errorMessage.value = null
+      } catch (error) {
+        errorMessage.value = error.message || 'Failed to delete category'
       }
     }
 
     const resetCategoryForm = () => {
       categoryForm.value = {
-        name: '',
-        description: ''
+        type: '',
+        description: '',
+        duration: null
       }
     }
 
@@ -150,7 +186,8 @@ export default {
       saveCategory,
       editCategory,
       deleteCategory,
-      resetCategoryForm
+      resetCategoryForm,
+      errorMessage
     }
   }
 }
